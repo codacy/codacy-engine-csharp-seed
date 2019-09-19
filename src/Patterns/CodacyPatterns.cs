@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Codacy.Engine.Seed.Patterns
 {
-    public sealed class CodacyPatterns
+    public sealed class CodacyPatterns : JsonModel
     {
         [JsonProperty(PropertyName = "name")] public string Name { get; set; }
 
@@ -12,15 +12,5 @@ namespace Codacy.Engine.Seed.Patterns
 
         [JsonProperty(PropertyName = "patterns")]
         public List<Pattern> Patterns { get; set; }
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this,
-                Formatting.None,
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
-        }
     }
 }

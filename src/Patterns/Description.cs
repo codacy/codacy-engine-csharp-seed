@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace Codacy.Engine.Seed.Patterns
 {
-    public class Description
+    public sealed class Description : JsonModel
     {
         [JsonProperty(PropertyName = "patternId")]
         public string PatternId { get; set; }

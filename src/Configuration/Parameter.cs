@@ -2,10 +2,12 @@ using Newtonsoft.Json;
 
 namespace Codacy.Engine.Seed.Configuration
 {
-    public sealed class Parameter
+    public sealed class Parameter : JsonModel
     {
-        [JsonProperty(PropertyName = "name")] public string Name { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "value")] public string Value { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
     }
 }

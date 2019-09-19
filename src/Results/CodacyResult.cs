@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace Codacy.Engine.Seed.Results
 {
-    public sealed class CodacyResult
+    public sealed class CodacyResult : JsonModel
     {
         [JsonProperty(PropertyName = "filename")]
         public string Filename { get; set; }
@@ -14,15 +14,5 @@ namespace Codacy.Engine.Seed.Results
         public string PatternId { get; set; }
 
         [JsonProperty(PropertyName = "line")] public long? Line { get; set; }
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this,
-                Formatting.None,
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
-        }
     }
 }

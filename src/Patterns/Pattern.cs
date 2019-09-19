@@ -3,7 +3,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Codacy.Engine.Seed.Patterns
 {
-    public sealed class Pattern
+    public sealed class Pattern : JsonModel
     {
         [JsonProperty(PropertyName = "patternId")]
         public string PatternId { get; set; }
