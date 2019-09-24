@@ -1,0 +1,74 @@
+version: 2.1
+
+orbs:
+  codacy: codacy/base@0.0.13
+
+jobs:
+  dotnet:
+    parameters:
+      cmd:
+        type: string
+        description: "The command to run"
+      persist_to_workspace:
+        type: boolean
+        description: "Whether to persist the workspace or not at the end of the job"
+        default: false
+    docker:
+      #TODO: switch to docker image
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    working_directory: ~/workdir
+    steps:
+      - run:
+          name: Install packages
+          command: |
+            echo "deb http://download.mono-project.com/repo/debian wheezy main" | tee /etc/apt/sources.list.d/mono-xamarin.list
+            apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+            apt-get update
+            apt-get install -y mono-complete build-essential nuget
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run command - << parameters.cmd >>
+          command: << parameters.cmd >>
+      - when:
+          condition: << parameters.persist_to_workspace >>
+          steps:
+            - persist_to_workspace:
+                root: ~/
+                paths:
+                  - workdir/*
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - codacy/checkout_and_version
+      - dotnet:
+          name: build
+          cmd: make
+          requires:
+            - codacy/checkout_and_version
+      - dotnet:
+          name: test
+          cmd: make test
+          requires:
+            - build
+      - dotnet:
+          name: publish_local
+          cmd: make pack
+          persist_to_workspace: true
+          requires:
+            - test
+      - dotnet:
+          name: publish
+          cmd: |
+            dotnet nuget push src/bin/Release/Codacy.Engine.Seed.$(cat .version).nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json
+          filters:
+            branches:
+              only: master
+          requires:
+            - publish_local
+      - codacy/tag_version:
+          name: tag_version
+          requires:
+            - publish
