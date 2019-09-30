@@ -2,8 +2,24 @@ using System;
 
 namespace Codacy.Engine.Seed
 {
+    /// <summary>
+    ///     TimeSpan helper.
+    ///     This parse a given string to a TimeSpan.
+    /// </summary>
     public static class TimeSpanHelper
     {
+        /// <summary>
+        ///     Parse a TimeSpan from a string formatted with ('number.time_scale' or 'number time_scale')
+        ///     Available time scales:
+        ///       - second(s)
+        ///       - minute(s)
+        ///       - hour(s)
+        ///
+        ///     e.g.: '1 hour', '2 hours', '30.minutes'
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
         public static TimeSpan Parse(string value)
         {
             var timeSplitted = value.Replace('.', ' ').Split(' ');

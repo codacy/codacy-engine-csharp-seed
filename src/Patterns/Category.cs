@@ -1,5 +1,8 @@
 namespace Codacy.Engine.Seed.Patterns
 {
+    /// <summary>
+    /// Codacy categories list
+    /// </summary>
     public enum Category
     {
         ErrorProne,
