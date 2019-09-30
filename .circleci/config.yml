@@ -50,7 +50,7 @@ workflows:
             - codacy/checkout_and_version
       - dotnet:
           name: test
-          cmd: make test
+          cmd: make unittest
           requires:
             - build
       - dotnet:
