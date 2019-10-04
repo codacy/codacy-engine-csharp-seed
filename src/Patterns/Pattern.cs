@@ -8,9 +8,46 @@ namespace Codacy.Engine.Seed.Patterns
     ///     Pattern model used by patterns.json file.
     /// </summary>
     /// <see cref="CodacyPatterns"/>
-    [ExcludeFromCodeCoverage]
     public sealed class Pattern : JsonModel
     {
+		private Pattern() { }
+		public Pattern(
+            string patternId,
+            Level level,
+            Category category,
+            Subcategory? subcategory = null,
+            Parameter[] parameters = null)
+        {
+			this.PatternId = patternId;
+            this.Level = level;
+            this.Category = category;
+            if(subcategory.HasValue) {
+                switch(subcategory.Value) {
+                    case Patterns.Subcategory.Injection:
+                    case Patterns.Subcategory.BrokenAuth:
+                    case Patterns.Subcategory.SensitiveData:
+                    case Patterns.Subcategory.XXE:
+                    case Patterns.Subcategory.BrokenAccess:
+                    case Patterns.Subcategory.Misconfiguration:
+                    case Patterns.Subcategory.XSS:
+                    case Patterns.Subcategory.BadDeserialization:
+                    case Patterns.Subcategory.VulnerableComponent:
+                    case Patterns.Subcategory.NoLogging:
+                        if(category != Category.Security)
+						{
+                            goto default;
+                        }
+						break;
+
+                    default:
+						throw new System.FormatException("Invalid subcategory!");
+
+				}
+            }
+			this.Subcategory = subcategory;
+			this.Parameters = parameters;
+		}
+
         /// <summary>
         ///     Pattern ID
         /// </summary>
@@ -22,7 +59,11 @@ namespace Codacy.Engine.Seed.Patterns
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "category")]
-        public Category? Category { get; set; }
+        public Category Category { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty(PropertyName = "subcategory")]
+        public Subcategory? Subcategory { get; set; }
 
         /// <summary>
         ///     Codacy level
