@@ -10,7 +10,7 @@ configure:
 build:
 	$(BUILD_CMD)
 
-test:
+unittest:
 	dotnet test
 
 pack:
