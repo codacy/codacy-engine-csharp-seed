@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -10,43 +10,25 @@ namespace Codacy.Engine.Seed.Patterns
     /// <see cref="CodacyPatterns"/>
     public sealed class Pattern : JsonModel
     {
-		private Pattern() { }
-		public Pattern(
+        private Pattern() { }
+        public Pattern(
             string patternId,
             Level level,
             Category category,
             Subcategory? subcategory = null,
             Parameter[] parameters = null)
         {
-			this.PatternId = patternId;
+            this.PatternId = patternId;
             this.Level = level;
             this.Category = category;
-            if(subcategory.HasValue) {
-                switch(subcategory.Value) {
-                    case Patterns.Subcategory.Injection:
-                    case Patterns.Subcategory.BrokenAuth:
-                    case Patterns.Subcategory.SensitiveData:
-                    case Patterns.Subcategory.XXE:
-                    case Patterns.Subcategory.BrokenAccess:
-                    case Patterns.Subcategory.Misconfiguration:
-                    case Patterns.Subcategory.XSS:
-                    case Patterns.Subcategory.BadDeserialization:
-                    case Patterns.Subcategory.VulnerableComponent:
-                    case Patterns.Subcategory.NoLogging:
-                        if(category != Category.Security)
-						{
-                            goto default;
-                        }
-						break;
-
-                    default:
-						throw new System.FormatException("Invalid subcategory!");
-
-				}
+            if (subcategory.HasValue)
+            {
+                if (!Enum.IsDefined(typeof(Subcategory), subcategory)) throw new FormatException("Invalid subcategory");
+                if (category != Category.Security) throw new FormatException("Security is the only category having subcategories");
             }
-			this.Subcategory = subcategory;
-			this.Parameters = parameters;
-		}
+            this.Subcategory = subcategory;
+            this.Parameters = parameters;
+        }
 
         /// <summary>
         ///     Pattern ID
