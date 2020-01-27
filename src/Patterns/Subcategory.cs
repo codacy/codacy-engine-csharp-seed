@@ -2,15 +2,27 @@ namespace Codacy.Engine.Seed.Patterns
 {
     public enum Subcategory
     {
-        Injection,
-        BrokenAuth,
-        SensitiveData,
-        XXE,
-        BrokenAccess,
-        Misconfiguration,
         XSS,
-        BadDeserialization,
-        VulnerableComponent,
-        NoLogging
+        InputValidation,
+        FileAccess,
+        HTTP,
+        Cookies,
+        UnexpectedBehaviour,
+        MassAssignment,InsecureStorage,
+        InsecureModulesLibraries,
+        Visibility,
+        CSRF,
+        Android,
+        MaliciousCode,
+        Cryptography,
+        CommandInjection,
+        FirefoxOS,
+        Auth,
+        DoS,
+        SQLInjection,
+        Routes,
+        Regex,
+        SSL,
+        Other
     }
 }
