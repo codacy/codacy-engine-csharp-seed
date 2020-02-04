@@ -122,7 +122,7 @@ namespace Codacy.Engine.Seed
         /// <returns>analyze task instance</returns>
         public async Task Run()
         {
-            var timeoutEnv = Environment.GetEnvironmentVariable("TIMEOUT");
+            var timeoutEnv = Environment.GetEnvironmentVariable("TIMEOUT_SECONDS");
 
             if (timeoutEnv is null)
             {
@@ -146,7 +146,7 @@ namespace Codacy.Engine.Seed
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine($"can't parse 'TIMEOUT' environment variable ({timeoutEnv})");
+                    Console.Error.WriteLine($"can't parse 'TIMEOUT_SECONDS' environment variable ({timeoutEnv})");
                     Logger.Send(e.StackTrace);
                     Environment.Exit(1);
                 }
