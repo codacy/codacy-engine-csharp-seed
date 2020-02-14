@@ -42,33 +42,36 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - codacy/checkout_and_version
-      - dotnet:
-          name: build
-          cmd: make
-          requires:
-            - codacy/checkout_and_version
-      - dotnet:
-          name: test
-          cmd: make unittest
-          requires:
-            - build
-      - dotnet:
-          name: publish_local
-          cmd: make pack
-          persist_to_workspace: true
-          requires:
-            - test
-      - dotnet:
-          name: publish
-          cmd: |
-            dotnet nuget push src/bin/Release/Codacy.Engine.Seed.$(cat .version).nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json
-          filters:
-            branches:
-              only: master
-          requires:
-            - publish_local
-      - codacy/tag_version:
-          name: tag_version
-          requires:
-            - publish
+      - codacy/shell:
+          cmd: echo $NUGET_API_KEY
+      # - codacy/checkout_and_version
+
+      # - dotnet:
+      #     name: build
+      #     cmd: make
+      #     requires:
+      #       - codacy/checkout_and_version
+      # - dotnet:
+      #     name: test
+      #     cmd: make unittest
+      #     requires:
+      #       - build
+      # - dotnet:
+      #     name: publish_local
+      #     cmd: make pack
+      #     persist_to_workspace: true
+      #     requires:
+      #       - test
+      # - dotnet:
+      #     name: publish
+      #     cmd: |
+      #       dotnet nuget push src/bin/Release/Codacy.Engine.Seed.$(cat .version).nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires:
+      #       - publish_local
+      # - codacy/tag_version:
+      #     name: tag_version
+      #     requires:
+      #       - publish
