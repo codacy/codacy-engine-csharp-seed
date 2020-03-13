@@ -1,5 +1,5 @@
 # codacy-engine-csharp-seed
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/213185dd703146eda5250cae95c11ac9)](https://www.codacy.com/manual/Codacy/codacy-engine-csharp-seed?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=codacy/codacy-engine-csharp-seed&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/213185dd703146eda5250cae95c11ac9)](https://www.codacy.com/gh/codacy/codacy-engine-csharp-seed?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=codacy/codacy-engine-csharp-seed&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://circleci.com/gh/codacy/codacy-engine-csharp-seed.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/codacy/codacy-engine-csharp-seed)
 
 Helpers to create Codacy engines in C#
