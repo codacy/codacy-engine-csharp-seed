@@ -16,7 +16,8 @@ namespace Codacy.Engine.Seed.Patterns
             Level level,
             Category category,
             Subcategory? subcategory = null,
-            Parameter[] parameters = null)
+            Parameter[] parameters = null,
+            bool enabled = false)
         {
             this.PatternId = patternId;
             this.Level = level;
@@ -28,6 +29,7 @@ namespace Codacy.Engine.Seed.Patterns
             }
             this.Subcategory = subcategory;
             this.Parameters = parameters;
+            this.Enabled = enabled;
         }
 
         /// <summary>
@@ -59,6 +61,12 @@ namespace Codacy.Engine.Seed.Patterns
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public Parameter[] Parameters { get; set; }
+
+        /// <summary>
+        ///     Pattern enabled by default
+        /// </summary>
+        [JsonProperty(PropertyName = "enabled")]
+        public bool Enabled { get; set; }
 
     }
 }
