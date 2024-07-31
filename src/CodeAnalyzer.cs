@@ -103,6 +103,15 @@ namespace Codacy.Engine.Seed
                     }
                 };
             }
+
+            // skip all files that don't have the main language extension
+            // To allow Semgrep to run on C# configuration files
+            // We are analyzing `Directory.Packages.props` as if it was a C# file
+            // This is to avoid that.
+            // More info here: https://codacy.zendesk.com/agent/tickets/44462
+            if (fileExtension != ".*") {
+                Config.Files = Config.Files.Where(file => file.EndsWith(fileExtension));
+            }
         }
 
         /// <summary>
