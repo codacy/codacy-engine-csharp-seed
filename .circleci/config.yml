@@ -14,17 +14,9 @@ jobs:
         description: "Whether to persist the workspace or not at the end of the job"
         default: false
     docker:
-      #TODO: switch to docker image
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+      - image: mcr.microsoft.com/dotnet/sdk:6.0-alpine3.18
     working_directory: ~/workdir
     steps:
-      - run:
-          name: Install packages
-          command: |
-            echo "deb http://download.mono-project.com/repo/debian wheezy main" | tee /etc/apt/sources.list.d/mono-xamarin.list
-            apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-            apt-get update
-            apt-get install -y mono-complete build-essential nuget
       - attach_workspace:
           at: ~/
       - run:
